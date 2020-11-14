@@ -1,7 +1,7 @@
 '''
 Merge different terminologies from 2-column (code\tterm) tsv files.
 
-Usage: python merge.py all.tsv ./*.tsv
+Usage: python merge.py all.tsv ./!(all).tsv
 
 Author: https://github.com/aasensios
 '''
@@ -18,13 +18,13 @@ merged = list()
 for input_file in input_files:
 
     with open(input_file) as f:
+        base = os.path.basename(input_file)
+        filename = os.path.splitext(base)[0]
         reader = csv.reader(f, dialect=csv.excel_tab)
-        rows = list(reader)
-        for row in rows:
-            base = os.path.basename(input_file)
-            filename = os.path.splitext(base)[0]
+        for row in reader:
             row.insert(0, filename)
             merged.append(row)
+            print(row)
 
 with open(output_file, 'w') as f:
     writer = csv.writer(f, dialect=csv.excel_tab)
