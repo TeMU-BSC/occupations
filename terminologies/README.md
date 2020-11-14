@@ -8,3 +8,7 @@ to-do list:
 [ ] snomedct: do we need the mapping to umls? do we want the umls occupation list (download from umls website)?
 [x] wordnet: concatenated, sorted and uniq'd SUMO and TO (there was 1082 coincidences)
 ```
+
+```shell
+cut -f3 all.tsv | sort | uniq -cdi > coincidents
+```
