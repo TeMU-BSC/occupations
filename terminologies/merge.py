@@ -24,8 +24,9 @@ for input_file in input_files:
         for row in reader:
             row.insert(0, filename)
             merged.append(row)
-            print(row)
 
 with open(output_file, 'w') as f:
     writer = csv.writer(f, dialect=csv.excel_tab)
+    fieldnames = ['terminology', 'code', 'term']
+    writer.writerow(fieldnames)
     writer.writerows(merged)
