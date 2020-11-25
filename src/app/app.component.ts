@@ -25,22 +25,21 @@ export class AppComponent {
         skipEmptyLines: true,
         complete: results => {
           this.allTerms = results.data
-          this.readTextFile()
-          this.initFuse()
+          this.readTextFile('../assets/sample.txt')
+          this.initFuse(this.allTerms)
         }
       })
     })
   }
 
-  readTextFile() {
-    fetch('../assets/sample.txt')
+  readTextFile(path: string) {
+    fetch(path)
       .then(response => response.text())
       .then(data => data.split(/[\r\n]+/).forEach(line => line ? this.sample.push(line) : null))
       .then(() => this.next())
   }
 
-  initFuse() {
-    const list = this.allTerms
+  initFuse(list: Term[]) {
     const options = {
       includeScore: true,
       keys: ['code', 'name'],
