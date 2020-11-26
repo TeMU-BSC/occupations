@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core'
 import Fuse from 'fuse.js'
-import { Papa, ParseResult } from 'ngx-papaparse'
-import { Annotation, Term } from './interfaces'
+
+import { emptyAnnotation } from './helpers/brat'
 import { simplify } from './helpers/strings'
-import { emptyAnnotation, getAnnotations } from './helpers/brat'
+import { Annotation, Term } from './interfaces'
+import { ParsingService } from './parsing.service'
 
 @Component({
   selector: 'app-root',
@@ -11,56 +12,41 @@ import { emptyAnnotation, getAnnotations } from './helpers/brat'
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  annotations: Annotation[] = []
-  currentAnnotation: Annotation = emptyAnnotation
+  files = { terms: '../assets/all.tsv', brat: { txt: '../assets/sample.txt', ann: '../assets/sample.ann' } }
   terms: Term[] = []
   filteredTerms: Term[] = []
-  fuse: Fuse<Term> = new Fuse([])
   limit: number = 10
+  annotations: Annotation[] = []
+  currentAnnotation: Annotation = emptyAnnotation
+  fuse: Fuse<Term> = new Fuse([])
 
-  constructor(private papa: Papa) { }
+  constructor(private parser: ParsingService) { }
 
   ngOnInit() {
-
-    // init terms
-    this.papa.parse('../assets/all.tsv', {
-      download: true,
-      header: true,
-      skipEmptyLines: true,
-      complete: (results: ParseResult) => {
-        this.terms = results.data
-
-        // init fuse.js instance
-        const list = this.terms
-        const options = {
-          includeScore: true,
-          keys: ['code', 'name'],
-          threshold: 0.4
-        }
-        this.fuse = new Fuse(list, options)
-
-        // init annotations
-        this.papa.parse('../assets/sample.ann', {
-          download: true,
-          skipEmptyLines: true,
-          complete: (results: ParseResult) => {
-            this.annotations = getAnnotations(results.data)
-            this.next()
-          }
-        })
-      }
+    this.parser.getTermsFromTsv(this.files.terms).subscribe(data => {
+      this.terms = data
+      this.initFuse(this.terms)
+      this.parser.getAnnotationsFromFile(this.files.brat.ann).subscribe(data => {
+        this.annotations = data
+        this.next()
+      })
     })
+  }
+
+  initFuse(list: any[]) {
+    const options = {
+      includeScore: true,
+      keys: ['code', 'name'],
+      threshold: 0.4
+    }
+    this.fuse = new Fuse(list, options)
   }
 
   filter(event: Event | null, options: any = { initialCriteria: '' }) {
     const input = event?.target as HTMLInputElement
     const criteria = options.initialCriteria || input.value
-
-    // native way
-    // this.filteredTerms = this.terms.filter(term => simplify(term.name).includes(simplify(criteria)))
-
-    // with fuse.js
-    this.filteredTerms = this.fuse?.search(criteria).map(result => result.item)
+    // this.filteredTerms = this.terms.filter(term => simplify(term.name).includes(simplify(criteria)))  // native way
+    this.filteredTerms = this.fuse?.search(criteria).map(result => result.item)  // with fuse.js
   }
 
   next() {

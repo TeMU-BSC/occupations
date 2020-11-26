@@ -1,7 +1,7 @@
 <h1>
-  {{ currentAnnotation?.evidence }}
-  <span *ngIf="currentAnnotation?.note">({{ currentAnnotation?.note }})</span>
-  <span *ngIf="currentAnnotation?.note">({{ currentAnnotation?.entity }})</span>
+  <span>{{ currentAnnotation?.evidence }}</span>
+  <span *ngIf="currentAnnotation?.note"> | {{ currentAnnotation?.note }}</span>
+  <span *ngIf="currentAnnotation?.note"> | {{ currentAnnotation?.entity }}</span>
 </h1>
 <input type="search" id="input" (input)="filter($event)">
 <button (click)="next()">Siguiente</button>
