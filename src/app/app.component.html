@@ -1,11 +1,15 @@
-<h1>{{ currentTerm }}</h1>
-<input type="search" id="input" (input)="filter('', $event)">
+<h1>
+  {{ currentAnnotation?.evidence }}
+  <span *ngIf="currentAnnotation?.note">({{ currentAnnotation?.note }})</span>
+  <span *ngIf="currentAnnotation?.note">({{ currentAnnotation?.entity }})</span>
+</h1>
+<input type="search" id="input" (input)="filter($event)">
 <button (click)="next()">Siguiente</button>
 <div style="margin-top: 1em;">{{ filteredTerms.length }} resultados (mostrando los {{ limit }} primeros)</div>
 <ol>
   <li *ngFor="let term of filteredTerms | slice:0:limit">
-    <span style="background: white; padding: 0 1em">{{ term.name }}</span>
-    <span style="background: lightblue; padding: 0 1em">{{ term.terminology }}</span>
-    <span style="background: lightgray; padding: 0 1em">{{ term.code }}</span>
+    <span style="background: lightyellow; padding: 0 1em">{{ term.name }}</span>
+    <span style="background: rgb(192, 231, 255); padding: 0 1em">{{ term.terminology }}</span>
+    <span style="background: rgb(233, 233, 233); padding: 0 1em">{{ term.code }}</span>
   </li>
 </ol>
