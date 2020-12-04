@@ -2,24 +2,24 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Occupations Fuzzy Finder</title>
-    <style>
-        .highlight {
-            font-weight: bold;
-            color: purple;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Occupations Classifier</title>
+  <style>
+    .highlight {
+      font-weight: bold;
+      color: purple;
+    }
+  </style>
 </head>
 
 <body>
-    <!-- <input type="file" id="file" onchange="parse()"> -->
-    <input type="text" id="searchCriteria">
-    <pre id="matches"></pre>
-    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
-    <script src="index.js"></script>
+  <input type="search" id="input">
+  <pre id="results"></pre>
+
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+  <script src="index.js"></script>
 </body>
 
 </html>

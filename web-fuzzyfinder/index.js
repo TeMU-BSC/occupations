@@ -1,4 +1,4 @@
-function fuseHighlight(fuseElement) {
+const fuseHighlight = (fuseElement) => {
   // https://github.com/krisk/Fuse/issues/6#issuecomment-191937490
   const text = fuseElement.matches[0]?.value
   const matches = fuseElement.matches[0]?.indices
@@ -20,45 +20,30 @@ function fuseHighlight(fuseElement) {
   return result.join('')
 }
 
-// option 1: read directly from all.tsv file
 Papa.parse('../terminologies/all.tsv', {
   download: true,
   header: true,
   skipEmptyLines: true,
-  complete: (results, file) => {
-    console.log("Parsing complete:", results, file)
-    // ...
+  complete: results => {
     const list = results.data
     const options = {
       includeScore: true,
       includeMatches: true,
-      keys: ['term']
+      keys: ['name']
     }
     const fuse = new Fuse(list, options)
-    const input = document.querySelector('#searchCriteria')
-    const matchesContainer = document.querySelector('#matches')
-    input.addEventListener('input', (e) => {
+    document.querySelector('#input').addEventListener('input', (e) => {
       const criteria = e.target.value
-      const result = fuse.search(criteria)
-      matchesContainer.innerHTML = ''
-      result.slice(0, 10).forEach(element => {
+      const result = fuse.search(criteria).slice(0, 10)
+
+      const resultsContainer = document.querySelector('#results')
+      resultsContainer.innerHTML = ''
+      result.forEach(element => {
         element.item.term = fuseHighlight(element)
         const p = document.createElement('p')
         p.innerHTML = JSON.stringify(element.item)
-        matchesContainer.appendChild(p)
-      });
+        resultsContainer.appendChild(p)
+      })
     })
   }
 })
-
-// option 2: upload a tsv file
-function parse() {
-  Papa.parse(document.querySelector('#file').files[0], {
-    header: true,
-    skipEmptyLines: true,
-    complete: (results, file) => {
-      console.log("Parsing complete:", results, file)
-      // ...
-    }
-  })
-}

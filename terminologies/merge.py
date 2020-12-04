@@ -27,6 +27,6 @@ for input_file in input_files:
 
 with open(output_file, 'w') as f:
     writer = csv.writer(f, dialect=csv.excel_tab)
-    fieldnames = ['terminology', 'code', 'term']
+    fieldnames = ['terminology', 'code', 'name']
     writer.writerow(fieldnames)
     writer.writerows(merged)

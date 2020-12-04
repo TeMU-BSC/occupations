@@ -1,3 +1,4 @@
+flask
 pandas
 spacy
 spacy_spanish_lemmatizer
