@@ -1,0 +1,51 @@
+T1	PROFESION 8 15	policía
+#1	AnnotatorNotes T1	5412
+T2	PROFESION 101 108	policía
+#2	AnnotatorNotes T2	5412
+T3	_REJ_PROFESION 101 114	policía local
+T4	_REJ_PROFESION 322 330	ministro
+#3	AnnotatorNotes T4	1111
+T5	PROFESION 315 330	primer ministro
+T6	PROFESION 593 607	vicepresidente
+T7	PROFESION 610 618	ministro
+#4	AnnotatorNotes T7	1111.2
+T8	PROFESION 700 712	microbiólogo
+#5	AnnotatorNotes T8	2131.4.9
+T9	PROFESION 993 999	doctor
+T10	PROFESION 1011 1030	jefe de infecciosas
+T11	FIGURATIVA 1202 1208	sastre
+#6	AnnotatorNotes T11	7531.5
+T12	PROFESION 1619 1627	ministra
+#7	AnnotatorNotes T12	1111.2
+T13	PROFESION 1711 1731	decano de los jueces
+T14	PROFESION 1923 1930	abogado
+#8	AnnotatorNotes T14	2611
+T15	PROFESION 2147 2157	presidente
+T16	PROFESION 2374 2378	juez
+#9	AnnotatorNotes T16	2612.1
+T17	PROFESION 2544 2563	Médico Intensivista
+T18	PROFESION 2621 2629	profesor
+T19	_REJ_PROFESION 2716 2720	cabo
+T20	PROFESION 2919 2928	enfermera
+T21	PROFESION 3158 3162	mago
+T22	PROFESION 3316 3348	jefe del GAR de la Guardia Civil
+T23	_REJ_PROFESION 3335 3342	Guardia
+T24	_REJ_PROFESION 3597 3606	principal
+T25	_REJ_PROFESION 3875 3884	principal
+T26	PROFESION 4064 4074	Periodista
+#10	AnnotatorNotes T26	2642
+#11	AnnotatorNotes T5	1
+#12	AnnotatorNotes T6	11
+#13	AnnotatorNotes T9	221
+#14	AnnotatorNotes T10	2212
+T27	FIGURATIVA 1212 1218	barman
+#15	AnnotatorNotes T27	5132.1
+T28	PROFESION 1534 1544	sanitarios
+#16	AnnotatorNotes T28	22
+#17	AnnotatorNotes T13	2612.1
+#18	AnnotatorNotes T15	1
+#19	AnnotatorNotes T17	2212
+#20	AnnotatorNotes T18	2310
+#21	AnnotatorNotes T20	5329.2
+#22	AnnotatorNotes T21	2659.2.6
+#23	AnnotatorNotes T22	5412.1
