@@ -3,9 +3,9 @@ import json
 import sys
 
 
-def tsv2json(input_file=sys.argv[1]):
+def tsv2json(input_file=sys.argv[1], has_header=False):
     with open(input_file) as f:
-        return list(csv.reader(f, dialect=csv.excel_tab))
+        return list(csv.DictReader(f, dialect=csv.excel_tab)) if has_header else list(csv.reader(f, dialect=csv.excel_tab))
 
 
 def write_to_disk(items: list, input_file=sys.argv[1]):

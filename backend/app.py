@@ -2,10 +2,13 @@ from brat2json import brat2json
 from tsv2json import tsv2json
 
 from flask import Flask, jsonify
+from flask_cors import CORS
+
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
+CORS(app)
 
-terms_file = './terminologies/all.tsv'
+terms_file = './data/terminologies/all.tsv'
 tweets_directory = './data/final_nfkc_offsets_ok'
 
 
@@ -16,7 +19,7 @@ def hello_world():
 
 @app.route('/terms')
 def terms():
-    terms = tsv2json(terms_file)
+    terms = tsv2json(terms_file, has_header=True)
     return jsonify(terms)
 
 
