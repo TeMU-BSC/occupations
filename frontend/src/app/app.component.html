@@ -1,10 +1,12 @@
+<small>{{ currentTweet?.file }}</small>
+<p>{{ currentTweet?.text }}</p>
 <h1>
   <span>{{ currentAnnotation?.evidence }}</span>
   <span *ngIf="currentAnnotation?.note"> | {{ currentAnnotation?.note }}</span>
   <span *ngIf="currentAnnotation?.note"> | {{ currentAnnotation?.entity }}</span>
 </h1>
 <input type="search" id="input" (input)="filter($event)">
-<button (click)="next()">Siguiente</button>
+<button (click)="nextAnnotation()">Siguiente</button>
 <div style="margin-top: 1em;">{{ filteredTerms.length }} resultados (mostrando los {{ limit }} primeros)</div>
 <ol>
   <li *ngFor="let term of filteredTerms | slice:0:limit">

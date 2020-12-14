@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core'
 import Fuse from 'fuse.js'
 
-import { emptyAnnotation } from './helpers/brat'
+import { ApiService } from './api.service'
 import { simplify } from './helpers/strings'
-import { Annotation, Term } from './interfaces'
-import { ParsingService } from './parsing.service'
+import { Annotation, Document, emptyAnnotation, emptyDocument, Term } from './interfaces'
 
 @Component({
   selector: 'app-root',
@@ -12,23 +11,24 @@ import { ParsingService } from './parsing.service'
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  files = { terms: '../assets/all.tsv', brat: { txt: '../assets/sample.txt', ann: '../assets/sample.ann' } }
   terms: Term[] = []
   filteredTerms: Term[] = []
-  limit: number = 10
-  annotations: Annotation[] = []
-  currentAnnotation: Annotation = emptyAnnotation
+  tweets: Document[] = []
+  currentTweet: Document | undefined = emptyDocument
+  currentAnnotation: Annotation | undefined = emptyAnnotation
   fuse: Fuse<Term> = new Fuse([])
+  limit: number = 10
 
-  constructor(private parser: ParsingService) { }
+  constructor(private api: ApiService) { }
 
   ngOnInit() {
-    this.parser.getTermsFromTsv(this.files.terms).subscribe(data => {
-      this.terms = data
+    this.api.getTerms().subscribe(terms => {
+      this.terms = terms
       this.initFuse(this.terms)
-      this.parser.getAnnotationsFromFile(this.files.brat.ann).subscribe(data => {
-        this.annotations = data
-        this.next()
+      this.api.getTweets().subscribe(tweets => {
+        this.tweets = tweets
+        this.currentTweet = this.tweets.shift()
+        this.nextAnnotation()
       })
     })
   }
@@ -49,12 +49,19 @@ export class AppComponent implements OnInit {
     this.filteredTerms = this.fuse?.search(criteria).map(result => result.item)  // with fuse.js
   }
 
-  next() {
-    const nextAnnotation = this.annotations.shift()
-    if (!nextAnnotation) { alert('¡Completado!'); return }
-    this.currentAnnotation = nextAnnotation || emptyAnnotation
+  nextAnnotation() {
+    this.currentAnnotation = this.currentTweet?.annotations.shift()
+    if (!this.currentAnnotation) {
+      this.currentTweet = this.tweets.shift()
+      this.currentAnnotation = this.currentTweet?.annotations.shift()
+      if (!this.currentTweet) {
+        alert('¡Completado!')
+        return
+      }
+      return
+    }
     const input = document.querySelector('#input') as HTMLInputElement
-    input.value = this.currentAnnotation?.evidence || ''
-    this.filter(null, { initialCriteria: this.currentAnnotation?.evidence })
+    input.value = this.currentAnnotation.evidence || ''
+    this.filter(null, { initialCriteria: this.currentAnnotation.evidence })
   }
 }

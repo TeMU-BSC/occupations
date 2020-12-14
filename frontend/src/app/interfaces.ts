@@ -9,6 +9,7 @@ export interface Annotation {
   note: string
   unspecified?: boolean
 }
+export const emptyAnnotation: Annotation = { id: '', entity: '', offset: { start: 0, end: 0 }, evidence: '', note: '' }
 
 export interface Term {
   terminology: string
@@ -16,3 +17,10 @@ export interface Term {
   name: string
   synonyms?: string[]
 }
+
+export interface Document {
+  file: string,
+  text: string,
+  annotations: Annotation[]
+}
+export const emptyDocument: Document = { file: '', text: '', annotations: [emptyAnnotation] }

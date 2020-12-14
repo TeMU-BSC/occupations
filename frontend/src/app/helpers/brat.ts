@@ -32,4 +32,3 @@ export const getAnnotations = (parsedAnn: string[][]): Annotation[] => {
   }))
   return annotations
 }
-export const emptyAnnotation: Annotation = { id: '', entity: '', offset: { start: 0, end: 0 }, evidence: '', note: '' }
