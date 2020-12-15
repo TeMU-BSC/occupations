@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   currentAnnotation: Annotation | undefined = emptyAnnotation
   fuse: Fuse<Term> = new Fuse([])
   limit: number = 10
+  exactMatches: Term[] = []
 
   constructor(private api: ApiService) { }
 
@@ -36,32 +37,38 @@ export class AppComponent implements OnInit {
   initFuse(list: any[]) {
     const options = {
       includeScore: true,
+      useExtendedSearch: true,
       keys: ['code', 'name'],
-      threshold: 0.4
+      threshold: 0.3
     }
     this.fuse = new Fuse(list, options)
   }
 
   filter(event: Event | null, options: any = { initialCriteria: '' }) {
-    const input = event?.target as HTMLInputElement
-    const criteria = options.initialCriteria || input.value
-    // this.filteredTerms = this.terms.filter(term => simplify(term.name).includes(simplify(criteria)))  // native way
-    this.filteredTerms = this.fuse?.search(criteria).map(result => result.item)  // with fuse.js
+    const criteria = options.initialCriteria || (event?.target as HTMLInputElement).value
+
+    // native way
+    // this.filteredTerms = this.terms.filter(term => simplify(term.name).includes(simplify(criteria)))
+
+    // with fuse.js
+    const searchResult = this.fuse?.search(criteria)
+    this.filteredTerms = searchResult.map(result => result.item)
   }
 
   nextAnnotation() {
     this.currentAnnotation = this.currentTweet?.annotations.shift()
     if (!this.currentAnnotation) {
       this.currentTweet = this.tweets.shift()
-      this.currentAnnotation = this.currentTweet?.annotations.shift()
       if (!this.currentTweet) {
         alert('¡Completado!')
         return
       }
-      return
+      this.currentAnnotation = this.currentTweet?.annotations.shift()
     }
     const input = document.querySelector('#input') as HTMLInputElement
-    input.value = this.currentAnnotation.evidence || ''
-    this.filter(null, { initialCriteria: this.currentAnnotation.evidence })
+    input.value = this.currentAnnotation?.evidence || ''
+    this.filter(null, { initialCriteria: this.currentAnnotation?.evidence })
+    this.exactMatches = this.filteredTerms.filter(term => !term.name.localeCompare(input.value, 'es', { sensitivity: 'base' }))
+    this.filteredTerms = this.filteredTerms.filter(term => !this.exactMatches.includes(term))
   }
 }

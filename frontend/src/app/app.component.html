@@ -5,8 +5,18 @@
   <span *ngIf="currentAnnotation?.note"> | {{ currentAnnotation?.note }}</span>
   <span *ngIf="currentAnnotation?.note"> | {{ currentAnnotation?.entity }}</span>
 </h1>
+<h2>{{ exactMatches.length }} coincidencias exactas</h2>
+<ul>
+  <li *ngFor="let term of exactMatches">
+    <span style="background: lightyellow; padding: 0 1em">{{ term.name }}</span>
+    <span style="background: rgb(192, 231, 255); padding: 0 1em">{{ term.terminology }}</span>
+    <span style="background: rgb(233, 233, 233); padding: 0 1em">{{ term.code }}</span>
+  </li>
+</ul>
+<h2>{{ filteredTerms.length }} coincidencias parciales</h2>
 <input type="search" id="input" (input)="filter($event)">
-<button (click)="nextAnnotation()">Siguiente</button>
+<small><a href="https://fusejs.io/examples.html#extended-search">Check the Extended Search section of
+    Fuse.js</a></small>
 <div style="margin-top: 1em;">{{ filteredTerms.length }} resultados (mostrando los {{ limit }} primeros)</div>
 <ol>
   <li *ngFor="let term of filteredTerms | slice:0:limit">
@@ -15,3 +25,7 @@
     <span style="background: rgb(233, 233, 233); padding: 0 1em">{{ term.code }}</span>
   </li>
 </ol>
+
+<footer style="position: fixed; bottom: 0;">
+  <button (click)="nextAnnotation()" style="height: 5em; width: 5em; background-color: greenyellow;">Aceptar</button>
+</footer>
