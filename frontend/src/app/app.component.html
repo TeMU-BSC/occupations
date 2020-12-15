@@ -1,31 +1,45 @@
-<small>{{ currentTweet?.file }}</small>
-<p>{{ currentTweet?.text }}</p>
-<h1>
-  <span>{{ currentAnnotation?.evidence }}</span>
-  <span *ngIf="currentAnnotation?.note"> | {{ currentAnnotation?.note }}</span>
-  <span *ngIf="currentAnnotation?.note"> | {{ currentAnnotation?.entity }}</span>
-</h1>
-<h2>{{ exactMatches.length }} coincidencias exactas</h2>
-<ul>
-  <li *ngFor="let term of exactMatches">
-    <span style="background: lightyellow; padding: 0 1em">{{ term.name }}</span>
-    <span style="background: rgb(192, 231, 255); padding: 0 1em">{{ term.terminology }}</span>
-    <span style="background: rgb(233, 233, 233); padding: 0 1em">{{ term.code }}</span>
-  </li>
-</ul>
-<h2>{{ filteredTerms.length }} coincidencias parciales</h2>
-<input type="search" id="input" (input)="filter($event)">
-<small><a href="https://fusejs.io/examples.html#extended-search">Check the Extended Search section of
-    Fuse.js</a></small>
-<div style="margin-top: 1em;">{{ filteredTerms.length }} resultados (mostrando los {{ limit }} primeros)</div>
-<ol>
-  <li *ngFor="let term of filteredTerms | slice:0:limit">
-    <span style="background: lightyellow; padding: 0 1em">{{ term.name }}</span>
-    <span style="background: rgb(192, 231, 255); padding: 0 1em">{{ term.terminology }}</span>
-    <span style="background: rgb(233, 233, 233); padding: 0 1em">{{ term.code }}</span>
-  </li>
-</ol>
-
-<footer style="position: fixed; bottom: 0;">
-  <button (click)="nextAnnotation()" style="height: 5em; width: 5em; background-color: greenyellow;">Aceptar</button>
-</footer>
+<div class="container">
+  <!-- <header>
+    Occupations Tagger
+  </header> -->
+  <main>
+    <h1 fxLayout fxLayoutAlign="center">
+      <span>{{ currentAnnotation?.evidence }}</span>
+      <span *ngIf="currentAnnotation?.note"> | {{ currentAnnotation?.note }}</span>
+      <span *ngIf="currentAnnotation?.note"> | {{ currentAnnotation?.entity }}</span>
+    </h1>
+    <button (click)="highlight()" style="background-color: yellow;">RESALTAR HALLAZGO</button>
+    <mat-card class="tweet mono">
+      <small>{{ currentTweet?.file }}</small>
+      <span class="context">{{ currentTweet?.text }}</span>
+    </mat-card>
+    <section>
+      <h2>{{ exactMatches.length }} coincidencias exactas</h2>
+      <app-card *ngFor="let term of exactMatches" [term]="term" [icon]="'remove'" [color]="'warn'"></app-card>
+    </section>
+    <section>
+      <h2>{{ filteredTerms.length }} coincidencias parciales</h2>
+      <mat-form-field appearance="fill" class="google-like-search-bar">
+        <mat-label>Criterio de búsqueda</mat-label>
+        <input matInput type="search" [(ngModel)]="value" (input)="filter()">
+        <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-hint><a href="https://fusejs.io/examples.html#extended-search">Check the Extended Search</a></mat-hint>
+      </mat-form-field>
+      <div style="margin-top: 1em;">{{ filteredTerms.length }} resultados (mostrando los {{ limit }} primeros)</div>
+      <div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="0.5em">
+        <app-card *ngFor="let term of filteredTerms | slice:0:limit" [term]="term" [icon]="'add'" [color]="'accent'">
+        </app-card>
+      </div>
+    </section>
+  </main>
+  <footer class="footer" fxLayout fxLayoutAlign="center" fxLayoutGap="0.5em">
+    <button mat-fab (click)="nextFinding()" class="action-button" style="background-color: lightgreen;">
+      <mat-icon>done</mat-icon>
+    </button>
+    <button mat-fab (click)="previousAnnotation()" class="action-button" style="background-color: lightgrey;">
+      <mat-icon>undo</mat-icon>
+    </button>
+  </footer>
+</div>

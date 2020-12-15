@@ -17,6 +17,7 @@ export interface Term {
   name: string
   synonyms?: string[]
 }
+export const emptyTerm: Term = { terminology: '', code: '', name: '' }
 
 export interface Document {
   file: string,

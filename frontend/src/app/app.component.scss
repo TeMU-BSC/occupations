@@ -1,0 +1,47 @@
+a {
+  color: white;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+pre {
+  white-space: pre-line;
+}
+
+small {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.container {
+  padding: 5rem 10rem;
+}
+
+.mono {
+  font-family: "Roboto Mono", monospace;
+}
+
+.tweet {
+  display: block;
+  word-wrap: break-word;
+}
+
+.google-like-search-bar {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 50%;
+}
+
+.action-button {
+  height: 7em;
+  width: 7em;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 1em;
+}
