@@ -1,6 +1,14 @@
+.mono {
+  font-family: "Roboto Mono", monospace;
+}
+
+.term-name {
+  font-size: large;
+  font-weight: bold;
+}
+
 .mat-card {
   padding: 0.5em;
-  margin-bottom: 0.5em;
+  margin-bottom: 1em;
   border-radius: 0.7em;
-  max-width: fit-content;
 }

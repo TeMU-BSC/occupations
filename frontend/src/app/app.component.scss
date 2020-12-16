@@ -4,6 +4,8 @@ a {
 
 h1 {
   font-size: 3em;
+  text-align: center;
+  margin: 1em;
 }
 
 small {
@@ -12,11 +14,7 @@ small {
 }
 
 .container {
-  padding: 3rem 10rem;
-}
-
-.mono {
-  font-family: "Roboto Mono", monospace;
+  padding: 0 10rem;
 }
 
 .google-like-search-bar {
@@ -33,6 +31,7 @@ small {
 .footer {
   position: absolute;
   bottom: 0;
-  right: 0;
+  // left: 10rem;
   margin: 1em;
+  text-align: center;
 }

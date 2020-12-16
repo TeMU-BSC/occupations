@@ -72,10 +72,12 @@ export class AppComponent implements OnInit {
     this.filteredTerms = this.filteredTerms.filter(term => !this.exactMatches.includes(term))
   }
 
-  previousAnnotation() {
-    alert('previousAnnotation function must be implemented')
+  previousFinding() {
+    alert('previousFinding function must be implemented')
   }
 
-
+  save() {
+    console.log(this.exactMatches)
+  }
 
 }

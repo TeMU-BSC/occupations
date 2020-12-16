@@ -1,37 +1,41 @@
 <div class="container">
+  <header>
+    <h1>{{ currentAnnotation.evidence }}</h1>
+    <p *ngIf="currentAnnotation.note">{{ currentAnnotation.note }}</p>
+    <p *ngIf="currentAnnotation.note">{{ currentAnnotation.entity }}</p>
+  </header>
   <main>
-    <h1 fxLayout fxLayoutAlign="center">
-      <span>{{ currentAnnotation?.evidence }}</span>
-      <span *ngIf="currentAnnotation?.note"> | {{ currentAnnotation?.note }}</span>
-      <span *ngIf="currentAnnotation?.note"> | {{ currentAnnotation?.entity }}</span>
-    </h1>
-    <app-tweet [tweet]="currentTweet" [annotation]="currentAnnotation"></app-tweet>
-    <section>
-      <h2>{{ exactMatches.length }} coincidencias exactas</h2>
-      <app-term *ngFor="let term of exactMatches" [term]="term" [icon]="'remove'" [color]="'warn'"></app-term>
-    </section>
-    <section>
-      <h2>{{ filteredTerms.length }} coincidencias parciales</h2>
-      <mat-form-field appearance="fill" class="google-like-search-bar">
-        <mat-label>Criterio de búsqueda</mat-label>
-        <input matInput type="search" [(ngModel)]="value" (input)="filter()">
-        <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-          <mat-icon>close</mat-icon>
-        </button>
-        <mat-hint><a href="https://fusejs.io/examples.html#extended-search">Check the Extended Search</a></mat-hint>
-      </mat-form-field>
-      <div style="margin-top: 1em;">{{ filteredTerms.length }} resultados (mostrando los {{ limit }} primeros)</div>
-      <div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="0.5em">
+    <div fxLayout fxLayoutGap="1em" style="margin-top: 1em;">
+      <section fxFlex="50%">
+        <h2>Términos asociados</h2>
+        <app-term *ngFor="let term of exactMatches" [term]="term" [icon]="'remove'" [color]="'warn'"></app-term>
+      </section>
+      <section fxFlex="50%">
+        <h2>Resultados de búsqueda</h2>
         <app-term *ngFor="let term of filteredTerms | slice:0:limit" [term]="term" [icon]="'add'" [color]="'accent'">
         </app-term>
-      </div>
-    </section>
+        <mat-form-field appearance="outline" class="google-like-search-bar">
+          <mat-label>Criterio de búsqueda</mat-label>
+          <input matInput type="search" [(ngModel)]="value" (input)="filter()">
+          <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-hint>{{ filteredTerms.length }} resultados (mostrando los {{ limit }}
+            primeros) <a href="https://fusejs.io/examples.html#extended-search">Check the Extended Search</a>
+          </mat-hint>
+        </mat-form-field>
+      </section>
+    </div>
+    <div fxLayout="column" fxLayoutGap="1em">
+      <app-tweet [tweet]="currentTweet" [annotation]="currentAnnotation"></app-tweet>
+    </div>
+
   </main>
-  <footer class="footer" fxLayout fxLayoutAlign="center" fxLayoutGap="0.5em">
-    <button mat-fab (click)="nextFinding()" class="action-button" style="background-color: lightgreen;">
+  <footer class="footer" fxLayout fxLayoutAlign="center" fxLayoutGap="1em">
+    <button mat-fab (click)="save(); nextFinding()" class="action-button" style="background-color: lightgreen;">
       <mat-icon>done</mat-icon>
     </button>
-    <button mat-fab (click)="previousAnnotation()" class="action-button" style="background-color: lightgrey;">
+    <button mat-fab (click)="previousFinding()" class="action-button" style="background-color: lightgrey;">
       <mat-icon>undo</mat-icon>
     </button>
   </footer>
