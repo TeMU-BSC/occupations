@@ -1,4 +1,4 @@
-import { Annotation } from '../interfaces'
+import { Annotation } from '../app.model'
 
 const getLinesStartingWith = (parsedAnn: string[][], startingText: string): string[][] => {
   return parsedAnn.filter((line: string[]) => line[0].startsWith(startingText))

@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
-import { Document, Term } from './interfaces'
+import { Term } from './app.model'
+import { Tweet } from './tweet/tweet.model'
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class ApiService {
     return this.http.get<Term[]>('http://localhost:5000/terms')
   }
 
-  getTweets(): Observable<Document[]> {
-    return this.http.get<Document[]>('http://localhost:5000/tweets')
+  getTweets(): Observable<Tweet[]> {
+    return this.http.get<Tweet[]>('http://localhost:5000/tweets')
   }
 }

@@ -1,21 +1,14 @@
 <div class="container">
-  <!-- <header>
-    Occupations Tagger
-  </header> -->
   <main>
     <h1 fxLayout fxLayoutAlign="center">
       <span>{{ currentAnnotation?.evidence }}</span>
       <span *ngIf="currentAnnotation?.note"> | {{ currentAnnotation?.note }}</span>
       <span *ngIf="currentAnnotation?.note"> | {{ currentAnnotation?.entity }}</span>
     </h1>
-    <button (click)="highlight()" style="background-color: yellow;">RESALTAR HALLAZGO</button>
-    <mat-card class="tweet mono">
-      <small>{{ currentTweet?.file }}</small>
-      <span class="context">{{ currentTweet?.text }}</span>
-    </mat-card>
+    <app-tweet [tweet]="currentTweet" [annotation]="currentAnnotation"></app-tweet>
     <section>
       <h2>{{ exactMatches.length }} coincidencias exactas</h2>
-      <app-card *ngFor="let term of exactMatches" [term]="term" [icon]="'remove'" [color]="'warn'"></app-card>
+      <app-term *ngFor="let term of exactMatches" [term]="term" [icon]="'remove'" [color]="'warn'"></app-term>
     </section>
     <section>
       <h2>{{ filteredTerms.length }} coincidencias parciales</h2>
@@ -29,8 +22,8 @@
       </mat-form-field>
       <div style="margin-top: 1em;">{{ filteredTerms.length }} resultados (mostrando los {{ limit }} primeros)</div>
       <div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="0.5em">
-        <app-card *ngFor="let term of filteredTerms | slice:0:limit" [term]="term" [icon]="'add'" [color]="'accent'">
-        </app-card>
+        <app-term *ngFor="let term of filteredTerms | slice:0:limit" [term]="term" [icon]="'add'" [color]="'accent'">
+        </app-term>
       </div>
     </section>
   </main>

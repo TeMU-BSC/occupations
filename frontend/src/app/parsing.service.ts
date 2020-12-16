@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { Papa } from 'ngx-papaparse'
-import { Annotation, Term } from 'src/app/interfaces'
+import { Annotation, Term } from 'src/app/app.model'
 import { getAnnotations } from './helpers/brat'
 
 @Injectable({
