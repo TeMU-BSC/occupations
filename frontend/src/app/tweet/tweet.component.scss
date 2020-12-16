@@ -1,5 +1,6 @@
 pre {
   white-space: pre-line;
+  font-family: "Roboto Mono", sans-serif;
 }
 
 .tweet {
@@ -8,12 +9,8 @@ pre {
   // border: 1px solid blue;
 }
 
-.mono {
-  font-family: "Roboto Mono", monospace;
-}
-
 .mat-card {
-  padding: 0.5em;
+  padding: 0.7em;
   margin-bottom: 1em;
   border-radius: 0.7em;
 }

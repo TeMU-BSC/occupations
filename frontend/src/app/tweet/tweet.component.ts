@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core'
+import { AfterViewInit, Component, Input, OnChanges, OnInit } from '@angular/core'
 import Mark from 'mark.js'  // https://markjs.io/
 import { Annotation } from '../app.model'
 import { Tweet } from './tweet.model'
@@ -8,7 +8,7 @@ import { Tweet } from './tweet.model'
   templateUrl: './tweet.component.html',
   styleUrls: ['./tweet.component.scss']
 })
-export class TweetComponent implements OnInit, OnChanges {
+export class TweetComponent implements OnChanges, AfterViewInit {
 
   @Input() tweet: Tweet = new Tweet()
   @Input() annotation: Annotation = new Annotation()
@@ -17,13 +17,12 @@ export class TweetComponent implements OnInit, OnChanges {
 
   constructor() { }
 
-  ngOnInit(): void {
-    // const context = document.querySelector('.context') as HTMLElement // requires an element with class "context" to exist
-    // this.instance = new Mark(context)
+  ngOnChanges(): void {
+    this.highlight()
   }
 
-  ngOnChanges(): void {
-    this.unHighlight()
+  ngAfterViewInit(): void {
+    this.highlight()
   }
 
   /**
@@ -35,6 +34,14 @@ export class TweetComponent implements OnInit, OnChanges {
   * https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle
   *
   */
+  highlight(): void {
+    this.instance.unmark({
+      done: () => {
+        this.instance.mark(this.annotation.evidence, { separateWordSearch: false })
+      }
+    })
+  }
+
   highlightRange(): void {
     this.instance.unmark({
       done: () => {

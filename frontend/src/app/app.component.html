@@ -1,22 +1,23 @@
-<div class="container">
-  <header>
-    <h1>{{ currentAnnotation.evidence }}</h1>
-    <p *ngIf="currentAnnotation.note">{{ currentAnnotation.note }}</p>
-    <p *ngIf="currentAnnotation.note">{{ currentAnnotation.entity }}</p>
-  </header>
-  <main>
-    <div fxLayout fxLayoutGap="1em" style="margin-top: 1em;">
+<div class="container" fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="1em">
+  <main fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="1em">
+    <h1>{{ annotation?.evidence }}</h1>
+    <!-- <p *ngIf="annotation?.note">{{ annotation?.note }}</p> -->
+    <!-- <p *ngIf="annotation?.entity">{{ annotation?.entity }}</p> -->
+    <app-tweet [tweet]="tweet" [annotation]="annotation"></app-tweet>
+    <div fxLayout fxLayoutGap="1em">
       <section fxFlex="50%">
         <h2>Términos asociados</h2>
-        <app-term *ngFor="let term of exactMatches" [term]="term" [icon]="'remove'" [color]="'warn'"></app-term>
+        <app-term *ngFor="let term of exactMatches | slice:0:limit" [term]="term" [icon]="'remove'" [color]="'warn'"
+          (click)="remove(term)"></app-term>
       </section>
       <section fxFlex="50%">
         <h2>Resultados de búsqueda</h2>
-        <app-term *ngFor="let term of filteredTerms | slice:0:limit" [term]="term" [icon]="'add'" [color]="'accent'">
+        <app-term *ngFor="let term of filteredTerms | slice:0:limit" [term]="term" [icon]="'add'" [color]="'accent'"
+          (click)="add(term)">
         </app-term>
         <mat-form-field appearance="outline" class="google-like-search-bar">
           <mat-label>Criterio de búsqueda</mat-label>
-          <input matInput type="search" [(ngModel)]="value" (input)="filter()">
+          <input matInput type="search" [(ngModel)]="value" (input)="filter(value)">
           <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
             <mat-icon>close</mat-icon>
           </button>
@@ -26,17 +27,13 @@
         </mat-form-field>
       </section>
     </div>
-    <div fxLayout="column" fxLayoutGap="1em">
-      <app-tweet [tweet]="currentTweet" [annotation]="currentAnnotation"></app-tweet>
-    </div>
-
   </main>
-  <footer class="footer" fxLayout fxLayoutAlign="center" fxLayoutGap="1em">
-    <button mat-fab (click)="save(); nextFinding()" class="action-button" style="background-color: lightgreen;">
-      <mat-icon>done</mat-icon>
+  <footer>
+    <button mat-fab (click)="save(); nextAnnotation()" class="action-button" style="background-color: lightgreen;">
+      <mat-icon class="action-icon">done</mat-icon>
     </button>
     <button mat-fab (click)="previousFinding()" class="action-button" style="background-color: lightgrey;">
-      <mat-icon>undo</mat-icon>
+      <mat-icon class="action-icon">undo</mat-icon>
     </button>
   </footer>
 </div>

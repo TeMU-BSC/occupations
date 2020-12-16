@@ -1,11 +1,39 @@
+.container {
+  padding: 0 10rem;
+}
+
+main {
+  min-height: calc(100% - 126px);
+}
+
+footer {
+  // height: 126px;
+  width: 100%;
+  position: fixed;
+  left: 10rem;
+  bottom: 0;
+  padding: 1em 0;
+}
+
+.action-button {
+  height: 7em;
+  width: 7em;
+  margin-right: 1em;
+}
+
+.action-icon {
+  font-size: 2em;
+  font-weight: bold;
+}
+
 a {
   color: white;
 }
 
 h1 {
   font-size: 3em;
-  text-align: center;
-  margin: 1em;
+  font-weight: bold;
+  padding-top: 0.5em;
 }
 
 small {
@@ -13,25 +41,8 @@ small {
   margin-bottom: 0.5em;
 }
 
-.container {
-  padding: 0 10rem;
-}
-
 .google-like-search-bar {
   width: 100%;
   box-sizing: border-box;
   border-radius: 50%;
-}
-
-.action-button {
-  height: 7em;
-  width: 7em;
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  // left: 10rem;
-  margin: 1em;
-  text-align: center;
 }

@@ -1,7 +1,8 @@
-<mat-card fxLayout fxLayoutAlign="space-between end" class="mono">
+<mat-card fxLayout fxLayoutAlign="space-between end">
   <div>
     <small>{{ term.terminology | uppercase }}: {{ term.code }}</small>
-    <p class="term-name">{{ term.name }}</p>
+    <br>
+    <span class="term-name">{{ term.name }}</span>
   </div>
   <button mat-icon-button [color]="color">
     <mat-icon>{{ icon }}</mat-icon>

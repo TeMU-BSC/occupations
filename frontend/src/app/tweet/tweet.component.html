@@ -1,8 +1,9 @@
-<div fxLayout fxLayoutAlign="space-between">
-  <button mat-button (click)="highlightRange()" style="color: yellow;">Resaltar hallazgo
-    en contexto</button>
-  <small>{{ tweet.file }}</small>
-</div>
-<mat-card class="tweet mono">
+<button mat-button (click)="highlight()" style="color: yellow;">
+  Resaltar hallazgo en contexto
+  <mat-icon fontSet="material-icons-outlined">wb_incandescent</mat-icon>
+  <!-- <mat-icon fontSet="material-icons-outlined">emoji_objects</mat-icon> -->
+</button>
+<small style="padding: 0 1em;">Fichero fuente: {{ tweet.file }}</small>
+<mat-card class="tweet">
   <pre class="context">{{ tweet.text }}</pre>
 </mat-card>

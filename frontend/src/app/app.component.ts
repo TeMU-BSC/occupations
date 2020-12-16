@@ -13,14 +13,14 @@ import { Tweet } from './tweet/tweet.model'
 })
 export class AppComponent implements OnInit {
 
+  tweets: Tweet[] = []
+  tweet: Tweet = new Tweet()
+  annotation: Annotation = new Annotation()
   value: string = ''
+  fuse: Fuse<Term> = new Fuse([])
   terms: Term[] = []
   filteredTerms: Term[] = []
   limit: number = 5
-  tweets: Tweet[] = []
-  currentTweet: Tweet = new Tweet()
-  currentAnnotation: Annotation = new Annotation()
-  fuse: Fuse<Term> = new Fuse([])
   exactMatches: Term[] = []
 
   constructor(private api: ApiService) { }
@@ -28,26 +28,27 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.api.getTerms().subscribe(terms => {
       this.terms = terms
-      this.initFuse(this.terms)
+      this.fuse = this.initFuse(this.terms)
       this.api.getTweets().subscribe(async tweets => {
         this.tweets = tweets
-        this.currentTweet = this.tweets.shift() as Tweet
-        this.nextFinding()
+        this.nextTweet()
+        this.nextAnnotation()
       })
     })
   }
 
-  initFuse(list: any[]) {
+  initFuse(list: Term[]): Fuse<Term> {
     const options = {
       includeScore: true,
       useExtendedSearch: true,
-      keys: ['code', 'name'],
+      keys: ['code', 'name', 'terminology'],
       threshold: 0.3
     }
-    this.fuse = new Fuse(list, options)
+    const index = Fuse.createIndex(options.keys, list)
+    return new Fuse(list, options, index)
   }
 
-  filter(criteria: string = this.value) {
+  filter(criteria: string) {
     // option 1: javascript filter + includes
     // this.filteredTerms = this.terms.filter(term => simplify(term.name).includes(simplify(criteria)))
 
@@ -56,24 +57,33 @@ export class AppComponent implements OnInit {
     this.filteredTerms = searchResult.map(result => result.item)
   }
 
-  nextFinding() {
-    this.currentAnnotation = this.currentTweet?.annotations.shift() as Annotation
-    if (!this.currentAnnotation) {
-      this.currentTweet = this.tweets.shift() as Tweet
-      if (!this.currentTweet) {
-        alert('¡Completado!')
-        return
-      }
-      this.currentAnnotation = this.currentTweet?.annotations.shift() as Annotation
+  nextTweet() {
+    this.tweet = this.tweets.shift() as Tweet
+    if (!this.tweet) { alert('¡Completado!') }
+  }
+
+  nextAnnotation() {
+    this.annotation = this.tweet.annotations.shift() as Annotation
+    if (!this.annotation) {
+      this.nextTweet()
+      this.annotation = this.tweet.annotations.shift() as Annotation
     }
-    this.value = this.currentAnnotation?.evidence || ''
-    this.filter()
+    this.value = this.annotation?.evidence || ''
+    this.filter(this.value)
     this.exactMatches = this.filteredTerms.filter(term => !term.name.localeCompare(this.value, 'es', { sensitivity: 'base' }))
     this.filteredTerms = this.filteredTerms.filter(term => !this.exactMatches.includes(term))
   }
 
   previousFinding() {
-    alert('previousFinding function must be implemented')
+    console.log('previousFinding() function must be implemented')
+  }
+
+  add(term: Term) {
+    console.log(term)
+  }
+
+  remove(term: Term) {
+    console.log(term)
   }
 
   save() {

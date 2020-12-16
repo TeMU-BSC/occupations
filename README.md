@@ -7,3 +7,6 @@ Project that aims to discover terms (official profession or casual occupation) o
 - SNOMED CT
 - Stanford coreNLP
 - WordNet
+
+Work-in-progress interface:
+![Working interface](frontend/src/assets/screenshot.png)
