@@ -20,7 +20,7 @@ const fuseHighlight = (fuseElement) => {
   return result.join('')
 }
 
-Papa.parse('../terminologies/all.tsv', {
+Papa.parse('../backend/data/terminologies/all.tsv', {
   download: true,
   header: true,
   skipEmptyLines: true,

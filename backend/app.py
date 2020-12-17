@@ -1,3 +1,5 @@
+import json
+
 from brat2json import brat2json
 from tsv2json import tsv2json
 
@@ -21,6 +23,13 @@ def hello_world():
 def terms():
     terms = tsv2json(terms_file, has_header=True)
     return jsonify(terms)
+
+
+@app.route('/esco-terms')
+def esco_terms():
+    with open('./data/terminologies/esco.json') as f:
+        esco_terms = json.load(f)
+    return jsonify(esco_terms)
 
 
 @app.route('/tweets')
