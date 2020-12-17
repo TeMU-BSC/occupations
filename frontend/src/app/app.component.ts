@@ -27,6 +27,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.api.getTerms().subscribe(terms => {
+
+      // work in progress
+      const groupByKey = (list: any[], key: string) => list.reduce((hash, obj) => ({ ...hash, [obj[key]]: (hash[obj[key]] || []).concat(obj) }), {})
+      const termsByTerminology = groupByKey(terms, 'terminology')
+      console.log('termsByTerminology', termsByTerminology)
+
       this.terms = terms
       this.fuse = this.initFuse(this.terms)
       this.api.getTweets().subscribe(async tweets => {
