@@ -44,7 +44,7 @@ const autoCompleteJS = new autoComplete({
       if (!JSON.parse(localStorage.getItem("acData"))) {
         // Fetch External Data Source
         // const source = await fetch("./db/generic.json")
-        const source = await fetch("./db/esco.json")
+        const source = await fetch("./db/test.json")
         // const source = await fetch(`http://localhost:5000/esco-terms`)
         const data = await source.json()
         // Save the fetched data into local storage
@@ -73,7 +73,7 @@ const autoCompleteJS = new autoComplete({
   searchEngine: "loose",
   diacritics: true,
   placeHolder: "Busca profesiones y ocupaciones",
-  maxResults: 50,
+  maxResults: 5,
   sort: (a, b) => {
     if (a.match < b.match) return -1
     if (a.match > b.match) return 1

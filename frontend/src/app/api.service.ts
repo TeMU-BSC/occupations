@@ -18,4 +18,20 @@ export class ApiService {
   getTweets(): Observable<Tweet[]> {
     return this.http.get<Tweet[]>('http://localhost:5000/tweets')
   }
+
+  // allTerms: Term[] = []
+  // allTweets: Tweet[] = []
+
+  // constructor(private http: HttpClient) {
+  //   this.getTerms()
+  // }
+
+  // getTerms(): void {
+  //   this.http.get<Term[]>('http://localhost:5000/terms').subscribe(terms => this.allTerms = terms)
+  // }
+
+  // getTweets(): void {
+  //   this.http.get<Tweet[]>('http://localhost:5000/tweets').subscribe(tweets => this.allTweets = tweets)
+  // }
+
 }

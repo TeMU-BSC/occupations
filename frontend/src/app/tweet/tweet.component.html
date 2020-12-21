@@ -1,9 +1,10 @@
-<button mat-button (click)="highlight()" style="color: yellow;">
-  Resaltar hallazgo en contexto
-  <mat-icon fontSet="material-icons-outlined">wb_incandescent</mat-icon>
-  <!-- <mat-icon fontSet="material-icons-outlined">emoji_objects</mat-icon> -->
-</button>
-<small style="padding: 0 1em;">Fichero fuente: {{ tweet.file }}</small>
-<mat-card class="tweet">
+<div>
+  <button mat-button class="highlight-button" (click)="highlight()">
+    Resaltar hallazgo en contexto
+    <mat-icon fontSet="material-icons-outlined">wb_incandescent</mat-icon>
+  </button>
+  <small style="padding: 0 1em;">Fichero fuente: {{ tweet.file }}</small>
+</div>
+<mat-card>
   <pre class="context">{{ tweet.text }}</pre>
 </mat-card>

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core'
-import Fuse from 'fuse.js'  // https://fusejs.io/
 
 import { ApiService } from './api.service'
 import { simplify } from './helpers/strings'
@@ -13,54 +12,26 @@ import { Tweet } from './tweet/tweet.model'
 })
 export class AppComponent implements OnInit {
 
-  tweets: Tweet[] = []
+  terms: Term[] = []
+  allTerms: Term[] = []
+  terminologies: string[] = []
   tweet: Tweet = new Tweet()
+  tweets: Tweet[] = []
   annotation: Annotation = new Annotation()
   value: string = ''
-  fuse: Fuse<Term> = new Fuse([])
-  terms: Term[] = []
-  filteredTerms: Term[] = []
-  limit: number = 5
-  exactMatches: Term[] = []
 
   constructor(private api: ApiService) { }
 
   ngOnInit() {
     this.api.getTerms().subscribe(terms => {
-
-      // work in progress
-      const groupByKey = (list: any[], key: string) => list.reduce((hash, obj) => ({ ...hash, [obj[key]]: (hash[obj[key]] || []).concat(obj) }), {})
-      const termsByTerminology = groupByKey(terms, 'terminology')
-      console.log('termsByTerminology', termsByTerminology)
-
-      this.terms = terms
-      this.fuse = this.initFuse(this.terms)
+      this.allTerms = terms
+      this.terminologies = [...new Set(terms.map(term => term.terminology))]
       this.api.getTweets().subscribe(async tweets => {
         this.tweets = tweets
         this.nextTweet()
         this.nextAnnotation()
       })
     })
-  }
-
-  initFuse(list: Term[]): Fuse<Term> {
-    const options = {
-      includeScore: true,
-      useExtendedSearch: true,
-      keys: ['code', 'name', 'terminology'],
-      threshold: 0.3
-    }
-    const index = Fuse.createIndex(options.keys, list)
-    return new Fuse(list, options, index)
-  }
-
-  filter(criteria: string) {
-    // option 1: javascript filter + includes
-    // this.filteredTerms = this.terms.filter(term => simplify(term.name).includes(simplify(criteria)))
-
-    // option 2: fuse.js
-    const searchResult = this.fuse?.search(criteria)
-    this.filteredTerms = searchResult.map(result => result.item)
   }
 
   nextTweet() {
@@ -75,9 +46,13 @@ export class AppComponent implements OnInit {
       this.annotation = this.tweet.annotations.shift() as Annotation
     }
     this.value = this.annotation?.evidence || ''
-    this.filter(this.value)
-    this.exactMatches = this.filteredTerms.filter(term => !term.name.localeCompare(this.value, 'es', { sensitivity: 'base' }))
-    this.filteredTerms = this.filteredTerms.filter(term => !this.exactMatches.includes(term))
+    const exactMatches = this.allTerms.filter(term => !term.name.localeCompare(this.value, 'es', { sensitivity: 'base' }))
+    this.terms = exactMatches
+    // this.terms = this.terms.filter(term => !exactMatches.includes(term))
+  }
+
+  findTerm(terminology: string) {
+    return this.terms.find(term => term.terminology === terminology) || new Term()
   }
 
   previousFinding() {
@@ -93,7 +68,7 @@ export class AppComponent implements OnInit {
   }
 
   save() {
-    console.log(this.exactMatches)
+    console.log(this.terms)
   }
 
 }

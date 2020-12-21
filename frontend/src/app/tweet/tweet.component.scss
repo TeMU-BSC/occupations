@@ -2,15 +2,11 @@ pre {
   white-space: pre-line;
   font-family: "Roboto Mono", sans-serif;
 }
-
-.tweet {
-  display: block;
-  word-wrap: break-word;
-  // border: 1px solid blue;
-}
-
-.mat-card {
-  padding: 0.7em;
-  margin-bottom: 1em;
-  border-radius: 0.7em;
+// .card {
+//   padding: 1em;
+//   margin-bottom: 0.5em;
+//   border-radius: 1em;
+// }
+.highlight-button {
+  color: yellow;
 }

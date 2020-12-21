@@ -1,0 +1,31 @@
+<mat-form-field appearance="outline" style="width: 100%;">
+  <mat-label>Criterio de búsqueda</mat-label>
+  <mat-chip-list #chipList>
+    <mat-chip *ngFor="let chip of chips" matTooltip="{{ chip.decsCode }}" [removable]="removable"
+      (removed)="alert(chip)">
+      {{ chip.termSpanish }}
+      <mat-icon *ngIf="chip.iconName" [color]="chip.iconColor" class="space-left">{{ chip.iconName }}
+      </mat-icon>
+      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+    </mat-chip>
+    <input matInput #chipInput [placeholder]="removable ? 'Busca términos...' : ''" [formControl]="autocompleteChipList"
+      [matAutocomplete]="auto" matAutocompletePosition="below" [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes" matChipInputAddOnBlur="true" [readonly]="!removable">
+  </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption (optionSelected)="addTerm($event)">
+    <mat-option *ngFor="let i = index; let option of filteredOptions | async | slice : 0 : 15" [value]="option"
+      matTooltip="{{ option.name }}" matTooltipShowDelay="1000" class="multiline-auto-complete-options">
+      <div fxLayout fxLayoutAlign="space-between">
+        <div class="content">
+          <span>{{ option.name }}</span>
+          -
+          <span class="text-muted text-smaller truncate">{{ option.terminology }}</span>
+        </div>
+        <span fxFlex="10" fxLayoutAlign="end end">{{ option.code }}</span>
+      </div>
+    </mat-option>
+  </mat-autocomplete>
+  <mat-hint>
+    Check the <a href="https://fusejs.io/examples.html#extended-search">Extended Search</a>
+  </mat-hint>
+</mat-form-field>
