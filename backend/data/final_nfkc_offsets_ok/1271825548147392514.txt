@@ -1,0 +1,1 @@
+La desescalada depende de no ser svcnormal. Y claro.

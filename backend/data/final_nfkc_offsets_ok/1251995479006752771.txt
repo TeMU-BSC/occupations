@@ -1,0 +1,15 @@
+Los 10 países con mayor tasa de mortalidad (+2.000 casos)
+
+Mundo: 6.87%
+1:Bélgica🇧🇪-14.76%
+2:Argelia🇩🇿-14.26%
+3:Reino Unido🇬🇧-13.37%
+4:Italia🇮🇹-13.21%
+5:Francia🇫🇷-12.92%
+6:Países Bajos🇳🇱-11.28%
+7:Suecia🇸🇪-10.70%
+8:España🇪🇸-10.47%
+9:Indonesia🇮🇩-8.85%
+10:México🇲🇽-8.67%
+
+#COVID19
